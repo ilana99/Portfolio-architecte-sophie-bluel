@@ -4,8 +4,9 @@ async function getWorks() {
     console.log(jsonData);
 
     const gallery = document.getElementById("gallery");
+
     function showWorks() {
-       
+
         for (let i = 0; i < jsonData.length; i++) {
             const figure = document.createElement("figure");
             gallery.appendChild(figure);
@@ -19,11 +20,14 @@ async function getWorks() {
     }
 
     showWorks();
-    
+
     const objetsBouton = document.getElementById("objets");
     const appartementsBouton = document.getElementById("appartements");
     const hotelsBouton = document.getElementById("hotels");
     const tousBouton = document.getElementById("tous");
+    tousBouton.classList.add("selected")
+    
+    
 
     function displayImagesParCategory(categoryName) {
         const imagesParCategory = jsonData.filter(item => item.category.name === categoryName);
@@ -41,24 +45,54 @@ async function getWorks() {
         }
     }
 
-    objetsBouton.addEventListener("click", function () {
-        displayImagesParCategory("Objets");
-    });
-
-    appartementsBouton.addEventListener("click", function () {
-        displayImagesParCategory("Appartements");
-    });
-
-    hotelsBouton.addEventListener("click", function () {
-        displayImagesParCategory("Hotels & restaurants");
-    });
+    function selectCategory(categoryName, selectedButton) {
+        displayImagesParCategory(categoryName);
+        tousBouton.classList.remove("selected");
+        objetsBouton.classList.remove("selected");
+        appartementsBouton.classList.remove("selected");
+        hotelsBouton.classList.remove("selected");
+        selectedButton.classList.add("selected");
+      }
+      
+      objetsBouton.addEventListener("click", function () {
+        selectCategory("Objets", objetsBouton);
+      });
+      
+      appartementsBouton.addEventListener("click", function () {
+        selectCategory("Appartements", appartementsBouton);
+      });
+      
+      hotelsBouton.addEventListener("click", function () {
+        selectCategory("Hotels & restaurants", hotelsBouton);
+      });
 
     tousBouton.addEventListener("click", function () {
         gallery.innerHTML = "";
         showWorks();
+        tousBouton.classList.remove("selected");
+        objetsBouton.classList.remove("selected");
+        appartementsBouton.classList.remove("selected");
+        hotelsBouton.classList.remove("selected");
+        tousBouton.classList.add("selected");
     });
 
 }
 
 getWorks();
+
+const form = document.getElementById("form")
+const loginBouton = document.getElementById("loginbouton");
+const loginMessage = document.querySelector(".login-message");
+
+loginBouton.addEventListener("click", function() {
+    const email = form.email.value;
+    const mdp = form.mdp.value;  
+
+    if (email === "sophie.bluel@test.tld" && mdp === "S0phie") {
+        window.open("index.html", "_self");
+    } else {
+        alert("Mauvais identifiants de connexion.")
+    }
+}
+)
 
