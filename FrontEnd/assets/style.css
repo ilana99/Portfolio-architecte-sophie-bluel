@@ -367,3 +367,33 @@ a {
 	font-weight: 500;
 }
 
+
+.loggedinHeader {
+	display: flex;
+	width: 100%;
+	background: black;
+	color: white;
+	justify-content: center;
+	font-size: 14px;
+	margin: 0px;
+	align-items: baseline;
+	padding: 5px;
+
+}
+
+.loggedinHeader button {
+	color: black;
+	border: none;
+	font-weight: 400;
+	font-family: 'Work Sans';
+	margin-left: 15px;
+	
+}
+
+.loggedinHeader div {
+	display: flex;
+}
+
+.loggedinHeader i {
+	margin-right: 5px;
+}

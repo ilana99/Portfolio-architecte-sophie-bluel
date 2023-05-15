@@ -26,8 +26,8 @@ async function getWorks() {
     const hotelsBouton = document.getElementById("hotels");
     const tousBouton = document.getElementById("tous");
     tousBouton.classList.add("selected")
-    
-    
+
+
 
     function displayImagesParCategory(categoryName) {
         const imagesParCategory = jsonData.filter(item => item.category.name === categoryName);
@@ -52,19 +52,19 @@ async function getWorks() {
         appartementsBouton.classList.remove("selected");
         hotelsBouton.classList.remove("selected");
         selectedButton.classList.add("selected");
-      }
-      
-      objetsBouton.addEventListener("click", function () {
+    }
+
+    objetsBouton.addEventListener("click", function () {
         selectCategory("Objets", objetsBouton);
-      });
-      
-      appartementsBouton.addEventListener("click", function () {
+    });
+
+    appartementsBouton.addEventListener("click", function () {
         selectCategory("Appartements", appartementsBouton);
-      });
-      
-      hotelsBouton.addEventListener("click", function () {
+    });
+
+    hotelsBouton.addEventListener("click", function () {
         selectCategory("Hotels & restaurants", hotelsBouton);
-      });
+    });
 
     tousBouton.addEventListener("click", function () {
         gallery.innerHTML = "";
@@ -83,16 +83,48 @@ getWorks();
 const form = document.getElementById("form")
 const loginBouton = document.getElementById("loginbouton");
 const loginMessage = document.querySelector(".login-message");
+const loginTest = document.getElementById("loginTest");
 
-loginBouton.addEventListener("click", function() {
+
+loginBouton.addEventListener("click", function () {
     const email = form.email.value;
-    const mdp = form.mdp.value;  
+    const password = form.password.value;
 
-    if (email === "sophie.bluel@test.tld" && mdp === "S0phie") {
-        window.open("index.html", "_self");
-    } else {
-        alert("Mauvais identifiants de connexion.")
+    function postUser(email, password) {
+        fetch("http://localhost:5678/api/users/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "email": email,
+                "password": password
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // login ok
+                console.log(data);
+                localStorage.setItem("emailLogin", email);
+                localStorage.setItem("passwordLogin", password);
+            })
+            .catch(error => {
+                console.error("Erreur:", error);
+            });
     }
-}
-)
 
+    postUser(email, password);
+
+}
+);
+
+if (localStorage.getItem("emailLogin") && localStorage.getItem("passwordLogin")) { 
+    const email = localStorage.getItem("emailLogin");
+    const password = localStorage.getItem("passwordLogin");
+    loginTest.innerHTML = "ok";
+}
