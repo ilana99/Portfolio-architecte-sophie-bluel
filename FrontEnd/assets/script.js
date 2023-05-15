@@ -83,8 +83,9 @@ getWorks();
 const form = document.getElementById("form")
 const loginBouton = document.getElementById("loginbouton");
 const loginMessage = document.querySelector(".login-message");
-const loginTest = document.getElementById("loginTest");
 
+const loggedinHeader = document.querySelector(".loggedinHeader");
+let loggedIn = localStorage.getItem("loggedIn");
 
 loginBouton.addEventListener("click", function () {
     const email = form.email.value;
@@ -108,10 +109,10 @@ loginBouton.addEventListener("click", function () {
                 return response.json();
             })
             .then(data => {
-                // login ok
                 console.log(data);
-                localStorage.setItem("emailLogin", email);
-                localStorage.setItem("passwordLogin", password);
+                localStorage.setItem("email", email);
+                localStorage.setItem("password", password);
+                localStorage.setItem("loggedIn", "true");
             })
             .catch(error => {
                 console.error("Erreur:", error);
@@ -119,12 +120,9 @@ loginBouton.addEventListener("click", function () {
     }
 
     postUser(email, password);
-
 }
 );
 
-if (localStorage.getItem("emailLogin") && localStorage.getItem("passwordLogin")) { 
-    const email = localStorage.getItem("emailLogin");
-    const password = localStorage.getItem("passwordLogin");
-    loginTest.innerHTML = "ok";
+if (localStorage.getItem("loggedIn") === "true") {
+    loggedinHeader.style.display = "flex";
 }

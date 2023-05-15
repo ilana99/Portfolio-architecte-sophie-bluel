@@ -136,8 +136,6 @@ table {
 
 /** end reset css**/
 body {
-	max-width: 1140px;
-	margin: auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
 	background: #FFFEF8;
@@ -367,9 +365,13 @@ a {
 	font-weight: 500;
 }
 
+header, main {
+	max-width: 1140px;
+	margin: auto;
+}
 
 .loggedinHeader {
-	display: flex;
+	display: none;
 	width: 100%;
 	background: black;
 	color: white;
@@ -378,7 +380,8 @@ a {
 	margin: 0px;
 	align-items: baseline;
 	padding: 5px;
-
+	margin-bottom: 15px;
+	
 }
 
 .loggedinHeader button {
@@ -397,3 +400,4 @@ a {
 .loggedinHeader i {
 	margin-right: 5px;
 }
+
