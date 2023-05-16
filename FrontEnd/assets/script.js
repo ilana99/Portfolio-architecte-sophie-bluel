@@ -87,6 +87,8 @@ const loginMessage = document.querySelector(".login-message");
 const loggedinHeader = document.querySelector(".loggedinHeader");
 let loggedIn = localStorage.getItem("loggedIn");
 
+let token;
+
 loginBouton.addEventListener("click", function () {
     const email = form.email.value;
     const password = form.password.value;
@@ -112,7 +114,8 @@ loginBouton.addEventListener("click", function () {
                 console.log(data);
                 localStorage.setItem("email", email);
                 localStorage.setItem("password", password);
-                localStorage.setItem("loggedIn", "true");
+                localStorage.setItem("token", data.token);
+                token = data.token;
             })
             .catch(error => {
                 console.error("Erreur:", error);
@@ -123,6 +126,59 @@ loginBouton.addEventListener("click", function () {
 }
 );
 
-if (localStorage.getItem("loggedIn") === "true") {
-    loggedinHeader.style.display = "flex";
+function changementsBouton() {
+    const button = document.querySelector(".loggedinHeader button");
+
+    button.addEventListener("click", function() {
+        console.log("Button clicked!");
+    });
 }
+
+
+
+if (localStorage.getItem("token")) {
+    const docHeader = document.querySelector("header");
+    var headerParent = docHeader.parentNode;
+
+    const sectionHeader = document.createElement("section");
+    sectionHeader.classList.add("loggedinHeader");
+
+
+    var childSection = [
+        document.createElement("div"),
+        document.createElement("button")
+    ];
+
+    childSection.forEach(function (childElement) {
+        sectionHeader.appendChild(childElement);
+    })
+
+    childSection[1].innerHTML = '<a href="#">publier les changements</a>';
+
+   
+    var childDiv = [
+        document.createElement("i"),
+        document.createElement("p")
+    ];
+
+    childDiv.forEach(function (childElement) {
+        childSection[0].appendChild(childElement);
+    });
+
+    childDiv[0].classList.add("fa-regular", "fa-pen-to-square");
+    childDiv[1].innerHTML = '<a href="#">Mode édition</a>';
+
+    headerParent.insertBefore(sectionHeader, docHeader);
+
+}
+
+changementsBouton();
+
+const modalFenetre = document.getElementById("modal");
+const modalClose = document.querySelector(".fa-solid.fa-xmark");
+
+modalClose.addEventListener("click", function() {
+    modalFenetre.style.display = "none"; 
+    console.log("ok");
+});
+   

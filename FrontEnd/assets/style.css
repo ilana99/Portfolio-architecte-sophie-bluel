@@ -139,6 +139,7 @@ body {
 	font-family: 'Work Sans';
 	font-size: 14px;
 	background: #FFFEF8;
+
 }
 
 header {
@@ -192,7 +193,7 @@ button {
 	font-size: 1em;
 	border: 1px solid #1D6154;
 	padding: 10px;
-	
+
 }
 
 button.selected {
@@ -365,13 +366,14 @@ a {
 	font-weight: 500;
 }
 
-header, main {
+header,
+main {
 	max-width: 1140px;
 	margin: auto;
 }
 
 .loggedinHeader {
-	display: none;
+	display: flex;
 	width: 100%;
 	background: black;
 	color: white;
@@ -381,7 +383,11 @@ header, main {
 	align-items: baseline;
 	padding: 5px;
 	margin-bottom: 15px;
-	
+
+}
+
+.loggedinHeader a {
+	color: white;
 }
 
 .loggedinHeader button {
@@ -390,7 +396,7 @@ header, main {
 	font-weight: 400;
 	font-family: 'Work Sans';
 	margin-left: 15px;
-	
+
 }
 
 .loggedinHeader div {
@@ -399,5 +405,121 @@ header, main {
 
 .loggedinHeader i {
 	margin-right: 5px;
+}
+
+#modal {
+	display: flex;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
+
+h3 {
+	font-size: 26px;
+	text-align: center;
+}
+
+#modal1 {
+	display: flex;
+	text-align: left;
+	flex-direction: column;
+	height: 450px;
+	width: 400px;
+	background-color: white;
+	padding: 5%;
+}
+
+hr {
+	width: 100%;
+	border: 1px solid #B9C5CC;
+}
+
+#ajout {
+	background: #1D6154;
+	color: white;
+	font-family: 'Work Sans';
+	font-weight: 400;
+	width: 60%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#supprimer {
+	border: none;
+	color: red;
+	font-family: 'Work Sans';
+	font-weight: 400;
+}
+
+#modal2 {
+	display: none;
+	flex-direction: column;
+	text-align: left;
+	height: 450px;
+	width: 400px;
+	background-color: white;
+	padding: 5%;
+	gap: 10px;
+}
+
+#ajoutPhoto {
+	height: 30%;
+	background: #E8F1F6;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	padding: 5%;
+	gap: 5px;
+	margin: 15px 0px;
+}
+
+#ajoutPhoto i {
+	font-size: 40px;
+	color: #B9C5CC;
+}
+
+#ajoutPhoto button {
+	background: #B9C5CC;
+	color: #306685;
+	border: none;
+	width: 50%;
+	margin: auto;
+	font-family: 'work sans';
+	font-weight: 400;
+}
+
+.navigation-modal {
+	display: flex;
+	justify-content: space-between;
+}
+
+#modal2 input {
+	height: 30px;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#categoriesModal {
+	height: 30px;
+	border: none;
+	background-color: white;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#valider {
+	width: 50%;
+	margin: auto;
+	border: none;
+	background: #B9C5CC;
+	color: white;
+	font-family: 'work sans';
+	font-weight: 400;
 }
 

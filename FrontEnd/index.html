@@ -16,13 +16,6 @@
 </head>
 
 <body>
-	<section class="loggedinHeader">
-		<div>
-			<i class="fa-regular fa-pen-to-square"></i>
-			<p>Mode édition</p>
-		</div>
-		<button>publier les changements</button>
-	</section>
 
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
@@ -51,6 +44,41 @@
 					décorateur(trice)</p>
 			</article>
 		</section>
+
+		<aside id="modal">
+			<div id="modal1">
+				<i class="fa-solid fa-xmark"></i>
+				<h3>Galerie photo</h3>
+				<div id="galleryModal"></div>
+				<hr>
+				<button id="ajout">Ajouter une photo</button>
+				<button id="supprimer">Supprimer la galerie</button>
+			</div>
+			<div id="modal2">
+				<div class="navigation-modal">
+					<i class="fa-solid fa-arrow-left"></i>
+					<i class="fa-solid fa-xmark"></i>
+				</div>
+				<h3>Ajout photo</h3>
+				<div id="ajoutPhoto">
+					<i class="fa-regular fa-image"></i>
+					<button>+ Ajouter photo</button>
+					<p>.jpg, png : 4mo max
+					</p>
+				</div>
+					<label for="titre">Titre</label>
+					<input type="text" name="titre">
+					<label for="categoriesModal">Catégorie</label>
+					<select name="categoriesModal" id="categoriesModal">
+						<option value="objets">Objets</option>
+						<option value="appartements">Appartements</option>
+						<option value="hotels">Hôtels & restaurants</option>
+					</select>
+					<hr>
+					<button id="valider">Valider</button>
+			</div>
+		</aside>
+
 		<section id="portfolio">
 			<h2>Mes Projets</h2>
 			<div id="boutons">
