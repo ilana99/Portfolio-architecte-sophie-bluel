@@ -17,7 +17,7 @@ async function getWorks() {
             figure.appendChild(img);
             figure.appendChild(figcaption);
         }
-    }
+    };
 
     showWorks();
 
@@ -76,7 +76,7 @@ async function getWorks() {
         tousBouton.classList.add("selected");
     });
 
-}
+};
 
 getWorks();
 
@@ -132,7 +132,7 @@ function changementsBouton() {
     button.addEventListener("click", function() {
         console.log("Button clicked!");
     });
-}
+};
 
 
 
@@ -170,15 +170,14 @@ if (localStorage.getItem("token")) {
 
     headerParent.insertBefore(sectionHeader, docHeader);
 
-}
+};
 
 changementsBouton();
 
 const modalFenetre = document.getElementById("modal");
-const modalClose = document.querySelector(".fa-solid.fa-xmark");
+const closeButton = document.querySelector(".closeButton");
 
-modalClose.addEventListener("click", function() {
-    modalFenetre.style.display = "none"; 
+closeButton.addEventListener("click", function() {
     console.log("ok");
 });
    
