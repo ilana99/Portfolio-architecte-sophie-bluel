@@ -401,6 +401,7 @@ main {
 .loggedinHeader button a {
 	color: black;
 }
+
 .loggedinHeader div {
 	display: flex;
 }
@@ -432,19 +433,41 @@ h3 {
 	display: flex;
 	text-align: left;
 	flex-direction: column;
-	height: 450px;
 	width: 400px;
+	height: auto;
 	background-color: white;
-	padding: 5%;
+	padding:  15px 55px;
+	border-radius: 5px;
+	margin-top: 60px;
 }
 
-#modal1 svg {
-	height: 20px;
+#modal h3 {
+	margin: 10px;
 }
+
+#galleryModal {
+	margin-top: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: flex-start;
+	gap: 5px;
+}
+
+
+
+#modal1 i {
+	font-size: 20px;
+	text-align: right;
+	position: relative;
+	margin-right: -20px;
+}
+
 
 hr {
 	width: 100%;
 	border: 1px solid #B9C5CC;
+	margin: 40px 0px;
 }
 
 #ajout {
@@ -473,6 +496,7 @@ hr {
 	background-color: white;
 	padding: 5%;
 	gap: 10px;
+	margin-top: 60px;
 }
 
 #ajoutPhoto {
@@ -528,3 +552,23 @@ hr {
 	font-family: 'work sans';
 	font-weight: 400;
 }
+
+
+#galleryModal div {
+	
+}
+
+#galleryModal i {
+	position: absolute;
+	color: white;
+	background:black;
+	padding: 4px;
+	border-radius: 10%;
+	margin-top: 5px;
+	margin-left: -30px;
+}
+
+#galleryModal img {
+	width: 80px;
+}
+

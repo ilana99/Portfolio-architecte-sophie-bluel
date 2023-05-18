@@ -93,7 +93,7 @@ const loginBouton = document.getElementById("loginbouton");
 const loginMessage = document.querySelector(".login-message");
 
 
-const loggedinHeader = document.querySelector(".loggedinHeader");
+
 let loggedIn = localStorage.getItem("loggedIn");
 
 let token;
@@ -177,10 +177,12 @@ if (localStorage.getItem("token")) {
         logOut();
     })
 
-    const childSectionDiv = childSection[0];
+    const modeEditionBouton = childSection[0];
 
-    childSectionDiv.addEventListener("click", function() {
+    modeEditionBouton.addEventListener("click", function() {
         modalFenetre.style.display = "flex";
+        sectionHeader.style.position = "sticky";
+
     })
 };
 
@@ -206,16 +208,16 @@ function showWorksModal(jsonData) {
         const img = document.createElement("img");
         img.src = jsonData[i].imageUrl;
 
-        const figcaption = document.createElement("figcaption");
-        figcaption.innerHTML = "éditer";
-
         const icon = document.createElement("i");
         icon.classList.add("fa-solid", "fa-trash-can");
 
-        gallery.appendChild(div);
+        const figcaption = document.createElement("figcaption");
+        figcaption.innerHTML = "éditer";
+
+        galleryModal.appendChild(div);
         div.appendChild(img);
-        div.appendChild(figcaption);
         div.appendChild(icon);
+        div.appendChild(figcaption);
     }
 }
 
