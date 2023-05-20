@@ -1,3 +1,4 @@
+
 async function getWorks() {
     let response = await fetch("http://localhost:5678/api/works");
     jsonData = await response.json();
@@ -137,6 +138,51 @@ if (loginBouton !== null) {
     );
 };
 
+const aside = document.getElementById("modal");
+const galleryModal = document.getElementById("galleryModal");
+
+function generateModal1() {
+    const divParent = document.createElement("div");
+    divParent.setAttribute("id", "modal1");
+
+    const icon = document.createElement("i");
+    icon.classList.add("fa-solid", "fa-xmark", "closeButton");
+
+    const titre = document.createElement("h3");
+    titre.innerHTML = "Galerie photo";
+
+    const divGallery = document.createElement("div");
+    divGallery.setAttribute("id", "galleryModal");
+    
+    showWorksModal(jsonData, divGallery);
+
+    const hr = document.createElement("hr");
+
+    const boutonAjout = document.createElement("button");
+    boutonAjout.setAttribute("id", "ajout");
+    boutonAjout.innerHTML = "Ajouter une photo";
+    const suppBouton = document.createElement("button");
+    suppBouton.setAttribute("id", "supprimer");
+    suppBouton.innerHTML = "Supprimer la galerie";
+
+    divParent.appendChild(icon);
+    divParent.appendChild(titre);
+    divParent.appendChild(divGallery);
+    divParent.appendChild(hr);
+    divParent.appendChild(boutonAjout);
+    divParent.appendChild(suppBouton);
+
+    aside.appendChild(divParent);
+
+    icon.addEventListener("click", function() {
+        modalFenetre.style.display = "none";
+        aside.innerHTML = "";
+    })
+}
+
+function generateModal2 () {
+
+}
 
 if (localStorage.getItem("token")) {
     const docHeader = document.querySelector("header");
@@ -168,40 +214,45 @@ if (localStorage.getItem("token")) {
 
     childDiv[0].classList.add("fa-regular", "fa-pen-to-square");
     childDiv[1].innerHTML = '<a href="#">Mode édition</a>';
-   
+
     headerParent.insertBefore(sectionHeader, docHeader);
 
     loginBouton.innerHTML = "logout";
- 
-    loginBouton.addEventListener("click", function() {
+
+    loginBouton.addEventListener("click", function () {
         logOut();
     })
 
     const modeEditionBouton = childSection[0];
 
-    modeEditionBouton.addEventListener("click", function() {
+    modeEditionBouton.addEventListener("click", function () {
         modalFenetre.style.display = "flex";
         sectionHeader.style.position = "sticky";
-
+        generateModal1();
     })
 };
 
 
 function logOut() {
-        button.innerHTML = "logout";
-        localStorage.clear();
+    button.innerHTML = "logout";
+    localStorage.clear();
 };
 
 
 const modalFenetre = document.getElementById("modal");
+
 const closeButton = document.querySelector(".closeButton");
-const galleryModal = document.getElementById("galleryModal");
+const ajoutButton = document.getElementById("ajout");
+const modal1 = document.getElementById("modal1");
 
-closeButton.addEventListener("click", function () {
-    modalFenetre.style.display = "none";
-});
+/*
+const modal2 = document.getElementById("modal2");
+const precedentButton = document.querySelector(".fa-arrow-left"); 
+const ajoutButton2 = document.getElementById("ajoutPhoto2");
+*/
 
-function showWorksModal(jsonData) {
+
+function showWorksModal(jsonData, galleryModal) {
     for (let i = 0; i < jsonData.length; i++) {
         const div = document.createElement("div");
 
@@ -214,11 +265,40 @@ function showWorksModal(jsonData) {
         const figcaption = document.createElement("figcaption");
         figcaption.innerHTML = "éditer";
 
-        galleryModal.appendChild(div);
+        if (galleryModal) {
+            galleryModal.appendChild(div);
+        }
         div.appendChild(img);
         div.appendChild(icon);
         div.appendChild(figcaption);
+
+        if (galleryModal) {
+            galleryModal.appendChild(div);
+        }
     }
 }
+/*
+precedentButton.addEventListener("click", function () {
+    modal2.style.display = "none";
+    modal1.style.display = "flex";
+})
+
+ajoutButton.addEventListener("click", function () {
+    modal1.style.display = "none";
+    modal2.style.display = "flex";
+})
+
+ajoutButton2.addEventListener("click", function () {
+
+})
 
 
+modalFenetre.addEventListener("click", function (event) {
+    if (event.target === modal) {
+         modalFenetre.style.display = "none";
+    }   
+});
+
+
+
+*/

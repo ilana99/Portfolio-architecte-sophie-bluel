@@ -410,6 +410,8 @@ main {
 	margin-right: 5px;
 }
 
+/* */
+
 #modal {
 	display: none;
 	position: fixed;
@@ -450,8 +452,23 @@ h3 {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	align-content: flex-start;
-	gap: 5px;
+	align-content: space-between;
+	gap: 2px;
+}
+
+
+#galleryModal i {
+	position: absolute;
+	color: white;
+	background:black;
+	padding: 4px;
+	border-radius: 10%;
+	margin-top: 5px;
+	margin-left: -30px;
+}
+
+#galleryModal img {
+	width: 80px;
 }
 
 
@@ -459,7 +476,6 @@ h3 {
 #modal1 i {
 	font-size: 20px;
 	text-align: right;
-	position: relative;
 	margin-right: -20px;
 }
 
@@ -486,6 +502,8 @@ hr {
 	font-family: 'Work Sans';
 	font-weight: 400;
 }
+
+/* */
 
 #modal2 {
 	display: none;
@@ -515,7 +533,7 @@ hr {
 	color: #B9C5CC;
 }
 
-#ajoutPhoto button {
+#ajoutPhoto label {
 	background: #B9C5CC;
 	color: #306685;
 	border: none;
@@ -523,6 +541,12 @@ hr {
 	margin: auto;
 	font-family: 'work sans';
 	font-weight: 400;
+	padding: 10px;
+	border-radius: 30px;
+}
+
+#ajoutPhoto input {
+	display: none;
 }
 
 .navigation-modal {
@@ -553,22 +577,4 @@ hr {
 	font-weight: 400;
 }
 
-
-#galleryModal div {
-	
-}
-
-#galleryModal i {
-	position: absolute;
-	color: white;
-	background:black;
-	padding: 4px;
-	border-radius: 10%;
-	margin-top: 5px;
-	margin-left: -30px;
-}
-
-#galleryModal img {
-	width: 80px;
-}
 

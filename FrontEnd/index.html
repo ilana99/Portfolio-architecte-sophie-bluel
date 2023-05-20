@@ -46,14 +46,7 @@
 		</section>
 
 		<aside id="modal">
-			<div id="modal1">
-					<i class="fa-solid fa-xmark closeButton"></i>
-				<h3>Galerie photo</h3>
-				<div id="galleryModal"></div>
-				<hr>
-				<button id="ajout">Ajouter une photo</button>
-				<button id="supprimer">Supprimer la galerie</button>
-			</div>
+			
 			<div id="modal2">
 				<div class="navigation-modal">
 					<i class="fa-solid fa-arrow-left"></i>
@@ -62,7 +55,8 @@
 				<h3>Ajout photo</h3>
 				<div id="ajoutPhoto">
 					<i class="fa-regular fa-image"></i>
-					<button>+ Ajouter photo</button>
+					<input type="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+					<label id="ajoutPhoto2" for="imageUpload">+ Ajouter photo</label>
 					<p>.jpg, png : 4mo max
 					</p>
 				</div>
