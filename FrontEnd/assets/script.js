@@ -106,9 +106,9 @@ if (loginBouton !== null) {
 
         function postUser(email, password) {
             fetch("http://localhost:5678/api/users/login", {
-                method: 'POST',
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     "email": email,
@@ -141,6 +141,7 @@ if (loginBouton !== null) {
 const aside = document.getElementById("modal");
 const galleryModal = document.getElementById("galleryModal");
 
+
 function generateModal1() {
     const divParent = document.createElement("div");
     divParent.setAttribute("id", "modal1");
@@ -153,7 +154,7 @@ function generateModal1() {
 
     const divGallery = document.createElement("div");
     divGallery.setAttribute("id", "galleryModal");
-    
+
     showWorksModal(jsonData, divGallery);
 
     const hr = document.createElement("hr");
@@ -174,13 +175,157 @@ function generateModal1() {
 
     aside.appendChild(divParent);
 
-    icon.addEventListener("click", function() {
+    icon.addEventListener("click", function () {
         modalFenetre.style.display = "none";
         aside.innerHTML = "";
     })
+
+    boutonAjout.addEventListener("click", function () {
+        aside.innerHTML = "";
+        const modal2 = generateModal2();
+        aside.appendChild(modal2);
+    })
 }
 
-function generateModal2 () {
+
+function generateModal2() {
+    const divParent = document.createElement("div");
+    divParent.setAttribute("id", "modal2");
+
+    divParent.style.display = "flex";
+
+    const divNav = document.createElement("div");
+    divNav.setAttribute("id", "navigation-modal");
+
+    const icon2 = document.createElement("i");
+    icon2.classList.add("fa-solid", "fa-arrow-left");
+
+    const icon = document.createElement("i");
+    icon.classList.add("fa-solid", "fa-xmark", "closeButton");
+
+    const titre = document.createElement("h3");
+    titre.innerHTML = "Ajout photo";
+
+    const divAjoutPhoto = document.createElement("div");
+    divAjoutPhoto.setAttribute("id", "ajoutPhoto");
+
+    const iconPhoto = document.createElement("i");
+    iconPhoto.classList.add("fa-solid", "fa-image");
+
+    const input = document.createElement("input");
+    input.setAttribute("type", "file");
+    input.setAttribute("id", "imageUpload");
+    input.setAttribute("accept", ".png, .jpg, .jpeg");
+
+    const label = document.createElement("label");
+    label.setAttribute("id", "ajoutPhoto2");
+    label.setAttribute("for", "imageUpload");
+    label.innerHTML = "+Ajouter photo";
+
+    const p = document.createElement("p");
+    p.innerHTML = ".jpg, .png : 4mo max.";
+
+    const labelTitre = document.createElement("label");
+    labelTitre.setAttribute("for", "titre");
+    labelTitre.innerHTML = "Titre";
+
+    const inputTitre = document.createElement("input");
+    inputTitre.setAttribute("type", "text");
+    inputTitre.setAttribute("name", "titre");
+    inputTitre.setAttribute("id", "inputitre");
+
+
+    const labelCat = document.createElement("label");
+    labelCat.setAttribute("for", "categoriesModal");
+    labelCat.innerHTML = "Catégorie";
+
+    const select = document.createElement("select");
+    select.setAttribute("name", "categoriesModal");
+    select.setAttribute("id", "categoriesModal");
+
+    const option1 = document.createElement("option");
+    option1.setAttribute("value", "1");
+    option1.innerHTML = "Objets";
+
+    const option2 = document.createElement("option");
+    option2.setAttribute("value", "2");
+    option2.innerHTML = "Appartements";
+
+    const option3 = document.createElement("option");
+    option3.setAttribute("value", "3");
+    option3.innerHTML = "Hôtels & restaurants";
+
+    const hr = document.createElement("hr");
+
+    const button = document.createElement("button");
+    button.setAttribute("id", "valider");
+    button.innerHTML = "Valider";
+
+    aside.appendChild(divParent);
+
+    divParent.appendChild(divNav);
+    divParent.appendChild(divAjoutPhoto);
+    divParent.appendChild(labelTitre);
+    divParent.appendChild(inputTitre);
+    divParent.appendChild(labelCat);
+    divParent.appendChild(select);
+    divParent.appendChild(hr);
+    divParent.appendChild(button);
+
+    divNav.appendChild(icon2);
+    divNav.appendChild(icon);
+
+    divAjoutPhoto.appendChild(iconPhoto);
+    divAjoutPhoto.appendChild(input);
+    divAjoutPhoto.appendChild(label);
+    divAjoutPhoto.appendChild(p);
+
+    select.appendChild(option1);
+    select.appendChild(option2);
+    select.appendChild(option3);
+
+    icon2.addEventListener("click", function () {
+        aside.innerHTML = "";
+        const modal1 = generateModal1();
+        aside.appendChild(modal1);
+    })
+
+    button.addEventListener("click", function() {
+        postWorks();
+    })
+
+
+};
+
+function postWorks() {
+    const titreInput = document.getElementById("inputitre").value;
+
+    const choixCategorie = document.getElementById("categoriesModal").value;
+
+    const image = document.getElementById("imageUpload").files[0];
+
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("title", titreInput);
+    formData.append("category", choixCategorie);
+
+
+    fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("post ok");
+        })
+        .catch(error => {
+            console.error("Erreur:", error);
+        });
 
 }
 
@@ -245,12 +390,6 @@ const closeButton = document.querySelector(".closeButton");
 const ajoutButton = document.getElementById("ajout");
 const modal1 = document.getElementById("modal1");
 
-/*
-const modal2 = document.getElementById("modal2");
-const precedentButton = document.querySelector(".fa-arrow-left"); 
-const ajoutButton2 = document.getElementById("ajoutPhoto2");
-*/
-
 
 function showWorksModal(jsonData, galleryModal) {
     for (let i = 0; i < jsonData.length; i++) {
@@ -277,28 +416,16 @@ function showWorksModal(jsonData, galleryModal) {
         }
     }
 }
-/*
-precedentButton.addEventListener("click", function () {
-    modal2.style.display = "none";
-    modal1.style.display = "flex";
-})
 
-ajoutButton.addEventListener("click", function () {
-    modal1.style.display = "none";
-    modal2.style.display = "flex";
-})
 
-ajoutButton2.addEventListener("click", function () {
-
-})
 
 
 modalFenetre.addEventListener("click", function (event) {
     if (event.target === modal) {
-         modalFenetre.style.display = "none";
-    }   
+        modalFenetre.style.display = "none";
+        aside.innerHTML = "";
+    }
 });
 
 
 
-*/

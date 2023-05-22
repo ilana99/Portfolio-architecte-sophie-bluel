@@ -549,7 +549,7 @@ hr {
 	display: none;
 }
 
-.navigation-modal {
+#navigation-modal {
 	display: flex;
 	justify-content: space-between;
 }
