@@ -1,3 +1,16 @@
+const gallery = document.getElementById("gallery");
+const objetsBouton = document.getElementById("objets");
+const appartementsBouton = document.getElementById("appartements");
+const hotelsBouton = document.getElementById("hotels");
+const tousBouton = document.getElementById("tous");
+const form = document.getElementById("form")
+const loginBouton = document.getElementById("loginbouton");
+const loginMessage = document.querySelector(".login-message");
+let token;
+const aside = document.getElementById("modal");
+const modalFenetre = document.getElementById("modal");
+
+
 
 async function getWorks() {
     let response = await fetch("http://localhost:5678/api/works");
@@ -11,7 +24,7 @@ async function getWorks() {
 
 getWorks();
 
-const gallery = document.getElementById("gallery");
+
 
 function showWorks(jsonData) {
     for (let i = 0; i < jsonData.length; i++) {
@@ -29,10 +42,7 @@ function showWorks(jsonData) {
     }
 }
 
-const objetsBouton = document.getElementById("objets");
-const appartementsBouton = document.getElementById("appartements");
-const hotelsBouton = document.getElementById("hotels");
-const tousBouton = document.getElementById("tous");
+
 tousBouton.classList.add("selected");
 
 
@@ -89,15 +99,7 @@ tousBouton.addEventListener("click", function () {
 });
 
 
-const form = document.getElementById("form")
-const loginBouton = document.getElementById("loginbouton");
-const loginMessage = document.querySelector(".login-message");
 
-
-
-let loggedIn = localStorage.getItem("loggedIn");
-
-let token;
 
 if (loginBouton !== null) {
     loginBouton.addEventListener("click", function () {
@@ -138,8 +140,6 @@ if (loginBouton !== null) {
     );
 };
 
-const aside = document.getElementById("modal");
-const galleryModal = document.getElementById("galleryModal");
 
 
 function generateModal1() {
@@ -162,6 +162,7 @@ function generateModal1() {
     const boutonAjout = document.createElement("button");
     boutonAjout.setAttribute("id", "ajout");
     boutonAjout.innerHTML = "Ajouter une photo";
+
     const suppBouton = document.createElement("button");
     suppBouton.setAttribute("id", "supprimer");
     suppBouton.innerHTML = "Supprimer la galerie";
@@ -284,6 +285,7 @@ function generateModal2() {
     select.appendChild(option2);
     select.appendChild(option3);
 
+
     icon2.addEventListener("click", function () {
         aside.innerHTML = "";
         const modal1 = generateModal1();
@@ -365,7 +367,7 @@ if (localStorage.getItem("token")) {
     loginBouton.innerHTML = "logout";
 
     loginBouton.addEventListener("click", function () {
-        logOut();
+        localStorage.clear();
     })
 
     const modeEditionBouton = childSection[0];
@@ -376,19 +378,6 @@ if (localStorage.getItem("token")) {
         generateModal1();
     })
 };
-
-
-function logOut() {
-    button.innerHTML = "logout";
-    localStorage.clear();
-};
-
-
-const modalFenetre = document.getElementById("modal");
-
-const closeButton = document.querySelector(".closeButton");
-const ajoutButton = document.getElementById("ajout");
-const modal1 = document.getElementById("modal1");
 
 
 function showWorksModal(jsonData, galleryModal) {
@@ -416,8 +405,6 @@ function showWorksModal(jsonData, galleryModal) {
         }
     }
 }
-
-
 
 
 modalFenetre.addEventListener("click", function (event) {
