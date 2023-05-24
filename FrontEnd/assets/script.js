@@ -5,11 +5,10 @@ const hotelsBouton = document.getElementById("hotels");
 const tousBouton = document.getElementById("tous");
 const form = document.getElementById("form")
 const loginBouton = document.getElementById("loginbouton");
+const loginLien = document.getElementById("loginlien");
 const loginMessage = document.querySelector(".login-message");
 let token;
 const aside = document.getElementById("modal");
-const modalFenetre = document.getElementById("modal");
-
 
 
 async function getWorks() {
@@ -23,7 +22,6 @@ async function getWorks() {
 }
 
 getWorks();
-
 
 
 function showWorks(jsonData) {
@@ -75,7 +73,6 @@ function selectCategory(categoryName, selectedButton) {
 };
 
 
-
 objetsBouton.addEventListener("click", function () {
     selectCategory("Objets", objetsBouton);
 });
@@ -97,9 +94,6 @@ tousBouton.addEventListener("click", function () {
     hotelsBouton.classList.remove("selected");
     tousBouton.classList.add("selected");
 });
-
-
-
 
 if (loginBouton !== null) {
     loginBouton.addEventListener("click", function () {
@@ -140,8 +134,6 @@ if (loginBouton !== null) {
     );
 };
 
-
-
 function generateModal1() {
     const divParent = document.createElement("div");
     divParent.setAttribute("id", "modal1");
@@ -177,17 +169,16 @@ function generateModal1() {
     aside.appendChild(divParent);
 
     icon.addEventListener("click", function () {
-        modalFenetre.style.display = "none";
+        aside.style.display = "none";
         aside.innerHTML = "";
     })
+
 
     boutonAjout.addEventListener("click", function () {
         aside.innerHTML = "";
-        const modal2 = generateModal2();
-        aside.appendChild(modal2);
+        aside.append(generateModal2());
     })
 }
-
 
 function generateModal2() {
     const divParent = document.createElement("div");
@@ -288,11 +279,10 @@ function generateModal2() {
 
     icon2.addEventListener("click", function () {
         aside.innerHTML = "";
-        const modal1 = generateModal1();
-        aside.appendChild(modal1);
+        aside.append(generateModal1());
     })
 
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
         postWorks();
     })
 
@@ -318,7 +308,7 @@ function postWorks() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error("Network response was not ok");
+                throw new Error("");
             }
             return response.json();
         })
@@ -337,7 +327,6 @@ if (localStorage.getItem("token")) {
 
     const sectionHeader = document.createElement("section");
     sectionHeader.classList.add("loggedinHeader");
-
 
     var childSection = [
         document.createElement("div"),
@@ -364,16 +353,17 @@ if (localStorage.getItem("token")) {
 
     headerParent.insertBefore(sectionHeader, docHeader);
 
-    loginBouton.innerHTML = "logout";
+    
+    loginLien.innerHTML = "logout";
 
-    loginBouton.addEventListener("click", function () {
+    loginLien.addEventListener("click", function () {
         localStorage.clear();
     })
 
     const modeEditionBouton = childSection[0];
 
     modeEditionBouton.addEventListener("click", function () {
-        modalFenetre.style.display = "flex";
+        aside.style.display = "flex";
         sectionHeader.style.position = "sticky";
         generateModal1();
     })
@@ -407,12 +397,10 @@ function showWorksModal(jsonData, galleryModal) {
 }
 
 
-modalFenetre.addEventListener("click", function (event) {
+aside.addEventListener("click", function (event) {
     if (event.target === modal) {
-        modalFenetre.style.display = "none";
+        aside.style.display = "none";
         aside.innerHTML = "";
     }
 });
-
-
 
