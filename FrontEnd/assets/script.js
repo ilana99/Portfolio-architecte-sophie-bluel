@@ -34,14 +34,13 @@ function showWorks(jsonData) {
         const figcaption = document.createElement("figcaption");
         figcaption.innerHTML = jsonData[i].title;
 
-        gallery.appendChild(figure);
+        if (gallery !== null) {
+            gallery.appendChild(figure);
+        }
         figure.appendChild(img);
         figure.appendChild(figcaption);
     }
 }
-
-
-tousBouton.classList.add("selected");
 
 
 function displayImagesParCategory(categoryName) {
@@ -72,28 +71,32 @@ function selectCategory(categoryName, selectedButton) {
     selectedButton.classList.add("selected");
 };
 
-
-objetsBouton.addEventListener("click", function () {
-    selectCategory("Objets", objetsBouton);
-});
-
-appartementsBouton.addEventListener("click", function () {
-    selectCategory("Appartements", appartementsBouton);
-});
-
-hotelsBouton.addEventListener("click", function () {
-    selectCategory("Hotels & restaurants", hotelsBouton);
-});
-
-tousBouton.addEventListener("click", function () {
-    gallery.innerHTML = "";
-    showWorks(jsonData);
-    tousBouton.classList.remove("selected");
-    objetsBouton.classList.remove("selected");
-    appartementsBouton.classList.remove("selected");
-    hotelsBouton.classList.remove("selected");
+if (tousBouton !== null) {
     tousBouton.classList.add("selected");
-});
+
+    objetsBouton.addEventListener("click", function () {
+        selectCategory("Objets", objetsBouton);
+    });
+
+    appartementsBouton.addEventListener("click", function () {
+        selectCategory("Appartements", appartementsBouton);
+    });
+
+    hotelsBouton.addEventListener("click", function () {
+        selectCategory("Hotels & restaurants", hotelsBouton);
+    });
+
+    tousBouton.addEventListener("click", function () {
+        gallery.innerHTML = "";
+        showWorks(jsonData);
+        tousBouton.classList.remove("selected");
+        objetsBouton.classList.remove("selected");
+        appartementsBouton.classList.remove("selected");
+        hotelsBouton.classList.remove("selected");
+        tousBouton.classList.add("selected");
+    });
+
+}
 
 if (loginBouton !== null) {
     loginBouton.addEventListener("click", function () {
@@ -285,7 +288,7 @@ function generateModal2() {
     button.addEventListener("click", function () {
         postWorks();
     })
-
+/*
     inputPhoto.addEventListener("change", function () {
         const image = inputPhoto.files[0];
         const imageUrl = URL.createObjectURL(image);
@@ -301,22 +304,27 @@ function generateModal2() {
 
         URL.revokeObjectURL(imageUrl);
 
-    })
+    }) */
 };
 
 function postWorks() {
+    const imageUpload = document.getElementById("imageUpload");
     const titreInput = document.getElementById("inputitre").value;
-
     const choixCategorie = document.getElementById("categoriesModal").value;
 
-    const imageUpload = document.getElementById("imageUpload");
+    let binaryString = "";
 
+    imageUpload.addEventListener("change", function (event) {
+        const fileName = imageUpload.files[0].name;
+        binaryString = stringToBinary(fileName);
+    })
+
+    const categorie = parseInt(choixCategorie);
 
     const formData = new FormData();
-    formData.append("image", imageUpload.files[0]);
+    formData.append("image", binaryString);
     formData.append("title", titreInput);
-    formData.append("category", choixCategorie);
-
+    formData.append("category", categorie);
 
     fetch("http://localhost:5678/api/works", {
         method: "POST",
@@ -334,8 +342,22 @@ function postWorks() {
         .catch(error => {
             console.error("Erreur:", error);
         });
+};
 
+
+function stringToBinary(str) {
+    let binaryString = '';
+
+    for (let i = 0; i < str.length; i++) {
+        const charCode = str.charCodeAt(i);
+        const binaryValue = charCode.toString(2);
+        binaryString += binaryValue.padStart(8, '0');
+    }
+
+    return binaryString;
 }
+
+
 
 if (localStorage.getItem("token")) {
     const docHeader = document.querySelector("header");
@@ -412,11 +434,13 @@ function showWorksModal(jsonData, galleryModal) {
     }
 }
 
+if (aside !== null) {
+    aside.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            aside.style.display = "none";
+            aside.innerHTML = "";
+        }
+    });
+}
 
-aside.addEventListener("click", function (event) {
-    if (event.target === modal) {
-        aside.style.display = "none";
-        aside.innerHTML = "";
-    }
-});
 
