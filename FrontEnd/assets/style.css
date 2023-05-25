@@ -577,4 +577,9 @@ hr {
 	font-weight: 400;
 }
 
+#photopreview {
+	width: 30px;
+	height: auto;
+}
+
 

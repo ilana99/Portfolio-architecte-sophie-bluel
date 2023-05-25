@@ -204,10 +204,10 @@ function generateModal2() {
     const iconPhoto = document.createElement("i");
     iconPhoto.classList.add("fa-solid", "fa-image");
 
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("id", "imageUpload");
-    input.setAttribute("accept", ".png, .jpg, .jpeg");
+    const inputPhoto = document.createElement("input");
+    inputPhoto.setAttribute("type", "file");
+    inputPhoto.setAttribute("id", "imageUpload");
+    inputPhoto.setAttribute("accept", ".png, .jpg, .jpeg");
 
     const label = document.createElement("label");
     label.setAttribute("id", "ajoutPhoto2");
@@ -268,7 +268,7 @@ function generateModal2() {
     divNav.appendChild(icon);
 
     divAjoutPhoto.appendChild(iconPhoto);
-    divAjoutPhoto.appendChild(input);
+    divAjoutPhoto.appendChild(inputPhoto);
     divAjoutPhoto.appendChild(label);
     divAjoutPhoto.appendChild(p);
 
@@ -286,7 +286,22 @@ function generateModal2() {
         postWorks();
     })
 
+    inputPhoto.addEventListener("change", function () {
+        const image = inputPhoto.files[0];
+        const imageUrl = URL.createObjectURL(image);
 
+        iconPhoto.style.display = "none";
+
+        const imagePreview = document.createElement("img");
+        imagePreview.setAttribute = ("src", imageUrl);
+        imagePreview.setAttribute("alt", "prévisualisation de la photo");
+        imagePreview.setAttribute("id", "photopreview");
+
+        divAjoutPhoto.appendChild(imagePreview);
+
+        URL.revokeObjectURL(imageUrl);
+
+    })
 };
 
 function postWorks() {
@@ -294,10 +309,11 @@ function postWorks() {
 
     const choixCategorie = document.getElementById("categoriesModal").value;
 
-    const image = document.getElementById("imageUpload").files[0];
+    const imageUpload = document.getElementById("imageUpload");
+
 
     const formData = new FormData();
-    formData.append("image", image);
+    formData.append("image", imageUpload.files[0]);
     formData.append("title", titreInput);
     formData.append("category", choixCategorie);
 
@@ -353,7 +369,7 @@ if (localStorage.getItem("token")) {
 
     headerParent.insertBefore(sectionHeader, docHeader);
 
-    
+
     loginLien.innerHTML = "logout";
 
     loginLien.addEventListener("click", function () {
