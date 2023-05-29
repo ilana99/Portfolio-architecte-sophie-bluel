@@ -138,6 +138,60 @@ if (loginBouton !== null) {
     );
 };
 
+if (localStorage.getItem("token")) {
+    const docHeader = document.querySelector("header");
+    var headerParent = docHeader.parentNode;
+
+    const sectionHeader = document.createElement("section");
+    sectionHeader.classList.add("loggedinHeader");
+
+    var childSection = [
+        document.createElement("div"),
+        document.createElement("button")
+    ];
+
+    childSection.forEach(function (childElement) {
+        sectionHeader.appendChild(childElement);
+    })
+
+    childSection[1].innerHTML = '<a href="#">publier les changements</a>';
+
+    var childDiv = [
+        document.createElement("i"),
+        document.createElement("p")
+    ];
+
+    childDiv.forEach(function (childElement) {
+        childSection[0].appendChild(childElement);
+    });
+
+    childDiv[0].classList.add("fa-regular", "fa-pen-to-square");
+    childDiv[1].innerHTML = '<a href="#">Mode édition</a>';
+
+    headerParent.insertBefore(sectionHeader, docHeader);
+
+
+    loginLien.innerHTML = "logout";
+
+    loginLien.addEventListener("click", function () {
+        localStorage.clear();
+    })
+
+    const modeEditionBouton = childSection[0];
+
+    modeEditionBouton.addEventListener("click", function () {
+        aside.style.display = "flex";
+        sectionHeader.style.position = "sticky";
+
+        let modal1 = document.getElementById("modal1");
+        if (!modal1) {
+            generateModal1();
+        }
+    })
+    
+};
+
+
 function generateModal1() {
     const divParent = document.createElement("div");
     divParent.setAttribute("id", "modal1");
@@ -190,7 +244,6 @@ function generateModal1() {
 
     const divPhoto = document.querySelectorAll(".div-photo");
    
-
     divPhoto.forEach(function(divPhoto) {
         const iconDelete = divPhoto.querySelector("i");
 
@@ -217,12 +270,43 @@ function generateModal1() {
                 .catch(error => {
                     console.error("Erreur:", error);
                 });
+
+                
     
         }
         )
     })
 
-    
+
+
+}
+
+
+function showWorksModal(jsonData, galleryModal) {
+    for (let i = 0; i < jsonData.length; i++) {
+        const div = document.createElement("div");
+        div.classList.add("div-photo");
+
+        const img = document.createElement("img");
+        img.src = jsonData[i].imageUrl;
+
+        const icon = document.createElement("i");
+        icon.classList.add("fa-solid", "fa-trash-can");
+
+        const figcaption = document.createElement("figcaption");
+        figcaption.innerHTML = "éditer";
+
+        if (galleryModal) {
+            galleryModal.appendChild(div);
+        }
+        div.appendChild(img);
+        div.appendChild(icon);
+        div.appendChild(figcaption);
+
+        if (galleryModal) {
+            galleryModal.appendChild(div);
+        }
+    }
 }
 
 function matchPhoto(jsonData) {
@@ -422,82 +506,6 @@ function stringToBinary(str) {
     return binaryString;
 }
 
-
-if (localStorage.getItem("token")) {
-    const docHeader = document.querySelector("header");
-    var headerParent = docHeader.parentNode;
-
-    const sectionHeader = document.createElement("section");
-    sectionHeader.classList.add("loggedinHeader");
-
-    var childSection = [
-        document.createElement("div"),
-        document.createElement("button")
-    ];
-
-    childSection.forEach(function (childElement) {
-        sectionHeader.appendChild(childElement);
-    })
-
-    childSection[1].innerHTML = '<a href="#">publier les changements</a>';
-
-    var childDiv = [
-        document.createElement("i"),
-        document.createElement("p")
-    ];
-
-    childDiv.forEach(function (childElement) {
-        childSection[0].appendChild(childElement);
-    });
-
-    childDiv[0].classList.add("fa-regular", "fa-pen-to-square");
-    childDiv[1].innerHTML = '<a href="#">Mode édition</a>';
-
-    headerParent.insertBefore(sectionHeader, docHeader);
-
-
-    loginLien.innerHTML = "logout";
-
-    loginLien.addEventListener("click", function () {
-        localStorage.clear();
-    })
-
-    const modeEditionBouton = childSection[0];
-
-    modeEditionBouton.addEventListener("click", function () {
-        aside.style.display = "flex";
-        sectionHeader.style.position = "sticky";
-        generateModal1();
-    })
-};
-
-
-function showWorksModal(jsonData, galleryModal) {
-    for (let i = 0; i < jsonData.length; i++) {
-        const div = document.createElement("div");
-        div.classList.add("div-photo");
-
-        const img = document.createElement("img");
-        img.src = jsonData[i].imageUrl;
-
-        const icon = document.createElement("i");
-        icon.classList.add("fa-solid", "fa-trash-can");
-
-        const figcaption = document.createElement("figcaption");
-        figcaption.innerHTML = "éditer";
-
-        if (galleryModal) {
-            galleryModal.appendChild(div);
-        }
-        div.appendChild(img);
-        div.appendChild(icon);
-        div.appendChild(figcaption);
-
-        if (galleryModal) {
-            galleryModal.appendChild(div);
-        }
-    }
-}
 
 if (aside !== null) {
     aside.addEventListener("click", function (event) {
