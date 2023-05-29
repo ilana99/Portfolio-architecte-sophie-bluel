@@ -426,21 +426,30 @@ main {
 	box-sizing: border-box;
 }
 
+#modal i {
+	font-size: 20px;
+}
+
 h3 {
 	font-size: 26px;
 	text-align: center;
 }
 
-#modal1 {
+#modal1 .fa-xmark {
+	margin-right: -20px;
+}
+
+#modal1, #modal2 {
 	display: flex;
 	text-align: left;
 	flex-direction: column;
 	width: 400px;
-	height: auto;
 	background-color: white;
 	padding:  15px 55px;
 	border-radius: 5px;
 	margin-top: 60px;
+	align-content: space-between;
+	
 }
 
 #modal h3 {
@@ -456,7 +465,6 @@ h3 {
 	gap: 2px;
 }
 
-
 #galleryModal i {
 	position: absolute;
 	color: white;
@@ -471,19 +479,16 @@ h3 {
 	width: 80px;
 }
 
-
-
 #modal1 i {
-	font-size: 20px;
 	text-align: right;
-	margin-right: -20px;
+	
 }
 
 
 hr {
 	width: 100%;
 	border: 1px solid #B9C5CC;
-	margin: 40px 0px;
+	margin: 20px 0px;
 }
 
 #ajout {
@@ -505,27 +510,18 @@ hr {
 
 /* */
 
+
 #modal2 {
-	display: none;
-	flex-direction: column;
-	text-align: left;
-	height: 450px;
-	width: 400px;
-	background-color: white;
-	padding: 5%;
 	gap: 10px;
-	margin-top: 60px;
 }
 
+
 #ajoutPhoto {
-	height: 30%;
 	background: #E8F1F6;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
 	padding: 5%;
-	gap: 5px;
-	margin: 15px 0px;
 }
 
 #ajoutPhoto i {
@@ -538,7 +534,7 @@ hr {
 	color: #306685;
 	border: none;
 	width: 50%;
-	margin: auto;
+	margin: 10px auto;
 	font-family: 'work sans';
 	font-weight: 400;
 	padding: 10px;
@@ -552,24 +548,19 @@ hr {
 #navigation-modal {
 	display: flex;
 	justify-content: space-between;
+	margin: 0px -20px;
 }
 
-#modal2 input {
-	height: 30px;
+#modal2 input, #modal2 select {
+	padding: 5px;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-#categoriesModal {
-	height: 30px;
-	border: none;
-	background-color: white;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
 
 #valider {
 	width: 50%;
-	margin: auto;
+	margin: 0px auto;
 	border: none;
 	background: #B9C5CC;
 	color: white;
@@ -578,8 +569,10 @@ hr {
 }
 
 #photopreview {
-	width: 30px;
+	width: 100px;
 	height: auto;
+	margin: auto;
+	object-fit: contain;
 }
 
 

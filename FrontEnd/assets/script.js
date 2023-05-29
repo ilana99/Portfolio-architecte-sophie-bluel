@@ -9,7 +9,7 @@ const loginLien = document.getElementById("loginlien");
 const loginMessage = document.querySelector(".login-message");
 let token;
 const aside = document.getElementById("modal");
-
+let src; 
 
 async function getWorks() {
     let response = await fetch("http://localhost:5678/api/works");
@@ -18,6 +18,7 @@ async function getWorks() {
     if (jsonData !== null) {
         showWorks(jsonData);
         showWorksModal(jsonData);
+        matchPhoto(jsonData);
     };
 }
 
@@ -71,7 +72,7 @@ function selectCategory(categoryName, selectedButton) {
     selectedButton.classList.add("selected");
 };
 
-if (tousBouton !== null) {
+if (tousBouton !== null) { // boutons catégories
     tousBouton.classList.add("selected");
 
     objetsBouton.addEventListener("click", function () {
@@ -162,6 +163,8 @@ function generateModal1() {
     suppBouton.setAttribute("id", "supprimer");
     suppBouton.innerHTML = "Supprimer la galerie";
 
+    aside.appendChild(divParent);
+
     divParent.appendChild(icon);
     divParent.appendChild(titre);
     divParent.appendChild(divGallery);
@@ -169,7 +172,6 @@ function generateModal1() {
     divParent.appendChild(boutonAjout);
     divParent.appendChild(suppBouton);
 
-    aside.appendChild(divParent);
 
     icon.addEventListener("click", function () {
         aside.style.display = "none";
@@ -179,8 +181,56 @@ function generateModal1() {
 
     boutonAjout.addEventListener("click", function () {
         aside.innerHTML = "";
-        aside.append(generateModal2());
+        const modal2 = generateModal2(); // prévient l'erreur node
+        if (modal2) {
+            aside.appendChild(generateModal2());
+        }
+
     })
+
+    const divPhoto = document.querySelectorAll(".div-photo");
+   
+
+    divPhoto.forEach(function(divPhoto) {
+        const iconDelete = divPhoto.querySelector("i");
+
+        iconDelete.addEventListener("click", function () {
+            const photo = divPhoto.querySelector("img");
+            src = photo.src;
+    
+            const id = matchPhoto(jsonData);
+    
+            console.log(id);
+    
+            fetch(`http://localhost:5678/api/works/${id}`, {
+                method: "DELETE",
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("image deleted");
+                })
+                .catch(error => {
+                    console.error("Erreur:", error);
+                });
+    
+        }
+        )
+    })
+
+    
+}
+
+function matchPhoto(jsonData) {
+    for (let i = 0; i < jsonData.length; i++) {
+        if (src === jsonData[i].imageUrl) {
+            return jsonData[i].id;
+        }
+    }
 }
 
 function generateModal2() {
@@ -228,11 +278,12 @@ function generateModal2() {
     inputTitre.setAttribute("type", "text");
     inputTitre.setAttribute("name", "titre");
     inputTitre.setAttribute("id", "inputitre");
-
+    // inputTitre.required = true;
 
     const labelCat = document.createElement("label");
     labelCat.setAttribute("for", "categoriesModal");
     labelCat.innerHTML = "Catégorie";
+    // labelCat.required = true;
 
     const select = document.createElement("select");
     select.setAttribute("name", "categoriesModal");
@@ -259,6 +310,7 @@ function generateModal2() {
     aside.appendChild(divParent);
 
     divParent.appendChild(divNav);
+    divParent.appendChild(titre);
     divParent.appendChild(divAjoutPhoto);
     divParent.appendChild(labelTitre);
     divParent.appendChild(inputTitre);
@@ -285,44 +337,57 @@ function generateModal2() {
         aside.append(generateModal1());
     })
 
+    if (inputTitre.value !== "") {
+        button.style.backgroundColor = "#1D6154";
+    }
+
+
     button.addEventListener("click", function () {
         postWorks();
     })
-/*
+
     inputPhoto.addEventListener("change", function () {
         const image = inputPhoto.files[0];
         const imageUrl = URL.createObjectURL(image);
 
         iconPhoto.style.display = "none";
+        label.style.display = "none";
+        p.style.display = "none";
+        divAjoutPhoto.style.padding = "0";
 
         const imagePreview = document.createElement("img");
-        imagePreview.setAttribute = ("src", imageUrl);
+        imagePreview.setAttribute("src", imageUrl);
         imagePreview.setAttribute("alt", "prévisualisation de la photo");
         imagePreview.setAttribute("id", "photopreview");
 
-        divAjoutPhoto.appendChild(imagePreview);
+        divAjoutPhoto.insertBefore(imagePreview, label);
 
         URL.revokeObjectURL(imageUrl);
 
-    }) */
+    })
+
+
+
+
 };
 
 function postWorks() {
     const imageUpload = document.getElementById("imageUpload");
     const titreInput = document.getElementById("inputitre").value;
     const choixCategorie = document.getElementById("categoriesModal").value;
-
     let binaryString = "";
 
     imageUpload.addEventListener("change", function (event) {
+        let binaryString = "";
         const fileName = imageUpload.files[0].name;
         binaryString = stringToBinary(fileName);
     })
 
     const categorie = parseInt(choixCategorie);
+    const imageBinary = parseInt(binaryString);
 
     const formData = new FormData();
-    formData.append("image", binaryString);
+    formData.append("image", imageBinary);
     formData.append("title", titreInput);
     formData.append("category", categorie);
 
@@ -356,7 +421,6 @@ function stringToBinary(str) {
 
     return binaryString;
 }
-
 
 
 if (localStorage.getItem("token")) {
@@ -411,6 +475,7 @@ if (localStorage.getItem("token")) {
 function showWorksModal(jsonData, galleryModal) {
     for (let i = 0; i < jsonData.length; i++) {
         const div = document.createElement("div");
+        div.classList.add("div-photo");
 
         const img = document.createElement("img");
         img.src = jsonData[i].imageUrl;
@@ -436,7 +501,7 @@ function showWorksModal(jsonData, galleryModal) {
 
 if (aside !== null) {
     aside.addEventListener("click", function (event) {
-        if (event.target === modal) {
+        if (event.target === aside) {
             aside.style.display = "none";
             aside.innerHTML = "";
         }
