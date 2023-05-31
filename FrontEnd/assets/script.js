@@ -9,7 +9,7 @@ const loginLien = document.getElementById("loginlien");
 const loginMessage = document.querySelector(".login-message");
 let token;
 const aside = document.getElementById("modal");
-let src; 
+let src;
 
 async function getWorks() {
     let response = await fetch("http://localhost:5678/api/works");
@@ -188,7 +188,7 @@ if (localStorage.getItem("token")) {
             generateModal1();
         }
     })
-    
+
 };
 
 
@@ -243,20 +243,22 @@ function generateModal1() {
     })
 
     const divPhoto = document.querySelectorAll(".div-photo");
-   
-    divPhoto.forEach(function(divPhoto) {
+
+    divPhoto.forEach(function (divPhoto) {
         const iconDelete = divPhoto.querySelector("i");
 
         iconDelete.addEventListener("click", function () {
             const photo = divPhoto.querySelector("img");
             src = photo.src;
-    
             const id = matchPhoto(jsonData);
-    
-            console.log(id);
-    
+
+            const token = localStorage.getItem("token");
+
             fetch(`http://localhost:5678/api/works/${id}`, {
                 method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
             })
                 .then(response => {
                     if (!response.ok) {
@@ -265,19 +267,16 @@ function generateModal1() {
                     return response.json();
                 })
                 .then(data => {
-                    console.log("image deleted");
+                    showWorksModal(jsonData, divGallery);
                 })
                 .catch(error => {
                     console.error("Erreur:", error);
                 });
 
-                
-    
+
         }
         )
     })
-
-
 
 }
 
@@ -316,6 +315,11 @@ function matchPhoto(jsonData) {
         }
     }
 }
+
+let inputTitreAdded = false;
+let imageAdded = false;
+let selectAdded = false;
+let button;
 
 function generateModal2() {
     const divParent = document.createElement("div");
@@ -362,12 +366,12 @@ function generateModal2() {
     inputTitre.setAttribute("type", "text");
     inputTitre.setAttribute("name", "titre");
     inputTitre.setAttribute("id", "inputitre");
-    // inputTitre.required = true;
+    inputTitre.required = true;
 
     const labelCat = document.createElement("label");
     labelCat.setAttribute("for", "categoriesModal");
     labelCat.innerHTML = "Catégorie";
-    // labelCat.required = true;
+    labelCat.required = true;
 
     const select = document.createElement("select");
     select.setAttribute("name", "categoriesModal");
@@ -387,7 +391,7 @@ function generateModal2() {
 
     const hr = document.createElement("hr");
 
-    const button = document.createElement("button");
+    button = document.createElement("button");
     button.setAttribute("id", "valider");
     button.innerHTML = "Valider";
 
@@ -421,14 +425,6 @@ function generateModal2() {
         aside.append(generateModal1());
     })
 
-    if (inputTitre.value !== "") {
-        button.style.backgroundColor = "#1D6154";
-    }
-
-
-    button.addEventListener("click", function () {
-        postWorks();
-    })
 
     inputPhoto.addEventListener("change", function () {
         const image = inputPhoto.files[0];
@@ -448,12 +444,39 @@ function generateModal2() {
 
         URL.revokeObjectURL(imageUrl);
 
+        if (imagePreview) {
+            imageAdded = true;
+            changeButtonColor();
+        }
+
     })
 
+    inputTitre.addEventListener("input", function () {
+        inputTitreAdded = inputTitre.value.length > 0;
+        changeButtonColor();
+    })
 
+    select.addEventListener("change", function () {
+        selectAdded = true;
+        changeButtonColor();
+    })
+
+    changeButtonColor();
 
 
 };
+
+function changeButtonColor() {
+    if (inputTitreAdded && imageAdded && selectAdded) {
+        button.style.backgroundColor = "#1D6154";
+        button.addEventListener("click", function () {
+            postWorks();
+        });
+    } else {
+        button.style.backgroundColor = "#B9C5CC";
+    }
+}
+
 
 function postWorks() {
     const imageUpload = document.getElementById("imageUpload");
@@ -469,7 +492,8 @@ function postWorks() {
 
     const categorie = parseInt(choixCategorie);
     const imageBinary = parseInt(binaryString);
-
+    const token = localStorage.getItem("token");
+    
     const formData = new FormData();
     formData.append("image", imageBinary);
     formData.append("title", titreInput);
@@ -477,7 +501,10 @@ function postWorks() {
 
     fetch("http://localhost:5678/api/works", {
         method: "POST",
-        body: formData
+        body: formData,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
     })
         .then(response => {
             if (!response.ok) {
