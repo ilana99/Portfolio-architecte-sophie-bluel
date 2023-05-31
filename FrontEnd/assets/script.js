@@ -103,6 +103,7 @@ if (loginBouton !== null) {
     loginBouton.addEventListener("click", function () {
         const email = form.email.value;
         const password = form.password.value;
+        const loginText = document.getElementById("loginTest");
 
         function postUser(email, password) {
             fetch("http://localhost:5678/api/users/login", {
@@ -117,11 +118,15 @@ if (loginBouton !== null) {
             })
                 .then(response => {
                     if (!response.ok) {
+                        loginText.style.backgroundColor = "#de7272";
+                        loginText.style.padding = "20px";
+                        loginText.innerHTML = "Mauvais identifiants de connexion." ; 
                         throw new Error("Network response was not ok");
                     }
                     return response.json();
                 })
                 .then(data => {
+                    window.open("index.html", "_self");
                     console.log(data);
                     localStorage.setItem("email", email);
                     localStorage.setItem("password", password);
@@ -191,7 +196,6 @@ if (localStorage.getItem("token")) {
 
 };
 
-
 function generateModal1() {
     const divParent = document.createElement("div");
     divParent.setAttribute("id", "modal1");
@@ -244,7 +248,7 @@ function generateModal1() {
 
     const divPhoto = document.querySelectorAll(".div-photo");
 
-    divPhoto.forEach(function (divPhoto) {
+    divPhoto.forEach(function (divPhoto) { // suppression des travaux
         const iconDelete = divPhoto.querySelector("i");
 
         iconDelete.addEventListener("click", function () {
@@ -279,7 +283,6 @@ function generateModal1() {
     })
 
 }
-
 
 function showWorksModal(jsonData, galleryModal) {
     for (let i = 0; i < jsonData.length; i++) {
@@ -422,7 +425,10 @@ function generateModal2() {
 
     icon2.addEventListener("click", function () {
         aside.innerHTML = "";
-        aside.append(generateModal1());
+        const modal1 = generateModal1(); // prévient l'erreur node
+        if (modal1) {
+            aside.appendChild(modal1);
+        }
     })
 
 
@@ -493,7 +499,13 @@ function postWorks() {
     const categorie = parseInt(choixCategorie);
     const imageBinary = parseInt(binaryString);
     const token = localStorage.getItem("token");
-    
+
+    const modal2 = document.getElementById("modal2");
+    const h3 = modal2.querySelector("h3");
+    const erreurMessage = document.createElement("p");
+
+    h3.insertAdjacentElement("afterend", erreurMessage);
+
     const formData = new FormData();
     formData.append("image", imageBinary);
     formData.append("title", titreInput);
@@ -508,6 +520,7 @@ function postWorks() {
     })
         .then(response => {
             if (!response.ok) {
+                erreurMessage.innerHTML = "Erreur."
                 throw new Error("");
             }
             return response.json();

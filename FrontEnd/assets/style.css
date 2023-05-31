@@ -410,6 +410,11 @@ main {
 	margin-right: 5px;
 }
 
+#loginTest {
+	color: white;
+	border-radius: 5px;
+}
+
 /* */
 
 #modal {
@@ -529,7 +534,9 @@ hr {
 	gap: 10px;
 }
 
-
+#modal2 h3 + * {
+	text-align: center;
+}
 #ajoutPhoto {
 	background: #E8F1F6;
 	display: flex;
