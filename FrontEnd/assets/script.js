@@ -255,7 +255,8 @@ function generateModal1() {
             const photo = divPhoto.querySelector("img");
             src = photo.src;
             const id = matchPhoto(jsonData);
-
+           
+           
             const token = localStorage.getItem("token");
 
             fetch(`http://localhost:5678/api/works/${id}`, {
@@ -431,6 +432,11 @@ function generateModal2() {
         }
     })
 
+    icon.addEventListener("click", function() {
+        aside.style.display = "none";
+        aside.innerHTML = "";
+    }
+    )
 
     inputPhoto.addEventListener("change", function () {
         const image = inputPhoto.files[0];
@@ -442,7 +448,8 @@ function generateModal2() {
         divAjoutPhoto.style.padding = "0";
 
         const imagePreview = document.createElement("img");
-        imagePreview.setAttribute("src", imageUrl);
+        // imagePreview.setAttribute("src", imageUrl);
+        imagePreview.src = URL.createObjectURL(image);
         imagePreview.setAttribute("alt", "prévisualisation de la photo");
         imagePreview.setAttribute("id", "photopreview");
 
@@ -497,7 +504,7 @@ function postWorks() {
     })
 
     const categorie = parseInt(choixCategorie);
-    const imageBinary = parseInt(binaryString);
+    // const imageBinary = parseInt(binaryString);
     const token = localStorage.getItem("token");
 
     const modal2 = document.getElementById("modal2");
@@ -506,8 +513,14 @@ function postWorks() {
 
     h3.insertAdjacentElement("afterend", erreurMessage);
 
+    let imagee = imageUpload.files[0];
+
+    const tokenString = "Bearer " + token;
+    console.log(tokenString);
+
     const formData = new FormData();
-    formData.append("image", imageBinary);
+    // formData.append("image", imageBinary);
+    formData.append("image",imagee)
     formData.append("title", titreInput);
     formData.append("category", categorie);
     console.log("token ", token);
@@ -516,7 +529,7 @@ function postWorks() {
         method: "POST",
         body: formData,
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: tokenString,
         }
     })
         .then(response => {
