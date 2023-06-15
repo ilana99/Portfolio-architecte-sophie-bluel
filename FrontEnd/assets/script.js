@@ -510,6 +510,7 @@ function postWorks() {
     formData.append("image", imageBinary);
     formData.append("title", titreInput);
     formData.append("category", categorie);
+    console.log("token ", token);
 
     fetch("http://localhost:5678/api/works", {
         method: "POST",
