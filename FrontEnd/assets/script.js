@@ -495,16 +495,9 @@ function postWorks() {
     const imageUpload = document.getElementById("imageUpload");
     const titreInput = document.getElementById("inputitre").value;
     const choixCategorie = document.getElementById("categoriesModal").value;
-    let binaryString = "";
-
-    imageUpload.addEventListener("change", function (event) {
-        let binaryString = "";
-        const fileName = imageUpload.files[0].name;
-        binaryString = stringToBinary(fileName);
-    })
+  
 
     const categorie = parseInt(choixCategorie);
-    // const imageBinary = parseInt(binaryString);
     const token = localStorage.getItem("token");
 
     const modal2 = document.getElementById("modal2");
@@ -513,18 +506,17 @@ function postWorks() {
 
     h3.insertAdjacentElement("afterend", erreurMessage);
 
-    let imagee = imageUpload.files[0];
+    let image = imageUpload.files[0];
 
     const tokenString = "Bearer " + token;
-    console.log(tokenString);
+   
 
     const formData = new FormData();
-    // formData.append("image", imageBinary);
-    formData.append("image",imagee)
+    
+    formData.append("image",image)
     formData.append("title", titreInput);
     formData.append("category", categorie);
-    console.log("token ", token);
-
+    
     fetch("http://localhost:5678/api/works", {
         method: "POST",
         body: formData,
@@ -547,18 +539,6 @@ function postWorks() {
         });
 };
 
-
-function stringToBinary(str) {
-    let binaryString = '';
-
-    for (let i = 0; i < str.length; i++) {
-        const charCode = str.charCodeAt(i);
-        const binaryValue = charCode.toString(2);
-        binaryString += binaryValue.padStart(8, '0');
-    }
-
-    return binaryString;
-}
 
 
 if (aside !== null) {
