@@ -24,7 +24,7 @@ async function getWorks() {
 
 getWorks();
 
-
+// gallery //
 function showWorks(jsonData) {
     for (let i = 0; i < jsonData.length; i++) {
         const figure = document.createElement("figure");
@@ -72,6 +72,7 @@ function selectCategory(categoryName, selectedButton) {
     selectedButton.classList.add("selected");
 };
 
+
 if (tousBouton !== null) { // boutons catégories
     tousBouton.classList.add("selected");
 
@@ -98,8 +99,9 @@ if (tousBouton !== null) { // boutons catégories
     });
 
 }
+// connexion //
 
-if (loginBouton !== null) {
+if (loginBouton !== null) { // connexion
     loginBouton.addEventListener("click", function () {
         const email = form.email.value;
         const password = form.password.value;
@@ -143,7 +145,7 @@ if (loginBouton !== null) {
     );
 };
 
-if (localStorage.getItem("token")) {
+if (localStorage.getItem("token")) { // bandeau connexion
     const docHeader = document.querySelector("header");
     var headerParent = docHeader.parentNode;
 
@@ -195,6 +197,8 @@ if (localStorage.getItem("token")) {
     })
 
 };
+
+// modales // 
 
 function generateModal1() {
     const divParent = document.createElement("div");
@@ -491,7 +495,7 @@ function changeButtonColor() {
 }
 
 
-function postWorks() {
+function postWorks() { // ajout travaux
     const imageUpload = document.getElementById("imageUpload");
     const titreInput = document.getElementById("inputitre").value;
     const choixCategorie = document.getElementById("categoriesModal").value;
