@@ -223,8 +223,15 @@ li:hover {
 }
 
 #introduction figure {
-	flex: 1
+	flex: 1;
 }
+
+#introduction figure > img + p:last-child {
+	margin: auto;
+	width: 80%;
+	padding-top: 10px;
+}
+  
 
 #introduction img {
 	display: block;
@@ -242,6 +249,15 @@ li:hover {
 
 #introduction p {
 	margin-bottom: 0.5em;
+}
+
+
+#portfolio-titres {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	gap: 3%;
+
 }
 
 #portfolio h2 {

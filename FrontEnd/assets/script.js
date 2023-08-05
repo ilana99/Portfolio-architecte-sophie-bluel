@@ -196,6 +196,30 @@ if (localStorage.getItem("token")) { // bandeau connexion
         }
     })
 
+    const filtres = document.getElementById("boutons");
+    filtres.style.visibility = "hidden";
+
+    const titres = document.getElementById("portfolio-titres");
+    const h2 = titres.querySelector("h2")
+    const modifier = document.createElement("a");
+    modifier.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> modifier';
+    modifier.setAttribute("href", "#")
+
+    titres.insertBefore(modifier, h2.nextSibling)
+
+    const introduction = document.getElementById("introduction");
+    const figureIntro = introduction.querySelector("figure");
+    const modifierIntro = document.createElement("a");
+    modifierIntro.innerHTML = '<i class="fa-regular fa-pen-to-square"></i> modifier';
+    modifierIntro.setAttribute("href", "#");
+    
+    const paragraphWrapper = document.createElement("p");
+    paragraphWrapper.appendChild(modifierIntro);
+    
+    figureIntro.appendChild(paragraphWrapper);
+    
+   
+    
 };
 
 // modales // 
@@ -329,6 +353,7 @@ let imageAdded = false;
 let selectAdded = false;
 let button;
 
+
 function generateModal2() {
     const divParent = document.createElement("div");
     divParent.setAttribute("id", "modal2");
@@ -452,7 +477,6 @@ function generateModal2() {
         divAjoutPhoto.style.padding = "0";
 
         const imagePreview = document.createElement("img");
-        // imagePreview.setAttribute("src", imageUrl);
         imagePreview.src = URL.createObjectURL(image);
         imagePreview.setAttribute("alt", "prévisualisation de la photo");
         imagePreview.setAttribute("id", "photopreview");
@@ -486,11 +510,12 @@ function generateModal2() {
 function changeButtonColor() {
     if (inputTitreAdded && imageAdded && selectAdded) {
         button.style.backgroundColor = "#1D6154";
-        button.addEventListener("click", function () {
-            postWorks();
-        });
+        button.removeEventListener("click", postWorks);
+        button.addEventListener("click", postWorks);
+        
     } else {
         button.style.backgroundColor = "#B9C5CC";
+        button.removeEventListener("click", postWorks);
     }
 }
 
