@@ -14,7 +14,7 @@ let src;
 async function getWorks() {
     let response = await fetch("http://localhost:5678/api/works");
     jsonData = await response.json();
-    console.log(jsonData);
+   // console.log(jsonData);
     if (jsonData !== null) {
         showWorks(jsonData);
         showWorksModal(jsonData);
